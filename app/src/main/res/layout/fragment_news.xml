@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewsFragment"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".3">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newsTitle"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:text="Loading News..." />
+
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newsFlipper"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="true">
+
+        </ViewFlipper>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/side_menu_color">
+
+        <TextClock
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/textClock"
+            android:background="@android:color/black"
+            android:textColor="@android:color/white"
+            android:format12Hour="EEE MMM dd\n h:mm a"
+            android:textSize="@dimen/clock_size"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/news_side"
+                android:textSize="@dimen/right_blue_menu_title"
+                android:text="Daily News"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/news_side_next_news_button"
+                android:src="@drawable/side_right_arrow" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/news_side_prev_news_button"
+                android:src="@drawable/side_left_arrow" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/news_btn_spacer"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

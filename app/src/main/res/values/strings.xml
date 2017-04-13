@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Revera</string>
+
+    <string name="ReveraLocation">leaside</string>
+
+    <string name="_0_deg">0 deg</string>
+    <string name="cweather">cWeather</string>
+    <string name="tab">\u0009</string>
+    <string name="recreationLoading">Loading Recreation Activities</string>
+    <string name="NoWifiNewsText">No Wifi. Sorry for the inconvenience. Try again later.</string>
+    <string name="loadingMenuText"><b>LOADING.....</b></string>
+</resources>
