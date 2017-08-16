@@ -16,7 +16,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1.75"
             android:background="@color/side_menu_color"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/menu_title" />
 
         <LinearLayout
             android:id="@+id/menu_view"
@@ -40,7 +41,7 @@
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
                     android:text="Loading Menu"
-                    android:textSize="36sp" />
+                    android:textSize="@dimen/menu_lunch" />
             </LinearLayout>
 
             <LinearLayout
@@ -57,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
-                    android:textSize="36sp" />
+                    android:textSize="@dimen/menu_dinner" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

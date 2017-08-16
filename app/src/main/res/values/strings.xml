@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Revera</string>
+    <string name="app_name">V1.0605 Revera</string>
 
     <string name="ReveraLocation">leaside</string>
 
@@ -8,5 +8,6 @@
     <string name="tab">\u0009</string>
     <string name="recreationLoading">Loading Recreation Activities</string>
     <string name="NoWifiNewsText">No Wifi. Sorry for the inconvenience. Try again later.</string>
-    <string name="loadingMenuText"><b>LOADING.....</b></string>
+    <string name="loadingMenuText">LOADING.....</string>
+    <string name="loading">Loading</string>
 </resources>

@@ -20,7 +20,7 @@
                 android:id="@+id/recreation_view_title"
                 android:background="@color/side_menu_color"
                 android:textColor="@color/black"
-                android:textSize="40sp"
+                android:textSize="@dimen/rec_title"
                 android:gravity="center" />
 
         </LinearLayout>
@@ -41,10 +41,10 @@
                     android:id="@+id/tvRecreation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:lineSpacingExtra="18sp"
+                    android:lineSpacingExtra="@dimen/rec_spacing"
                     android:padding="20dp"
                     android:text="Loading Recreation Activities"
-                    android:textSize="36sp" />
+                    android:textSize="@dimen/rec_text" />
             </ScrollView>
         </LinearLayout>
     </LinearLayout>

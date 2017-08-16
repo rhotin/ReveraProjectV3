@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -56,7 +56,7 @@
                         android:layout_alignParentTop="true"
                         android:text="Currently:"
                         android:textColor="#000000"
-                        android:textSize="25sp" />
+                        android:textSize="@dimen/weather_25sp" />
 
                     <TextView
                         android:id="@+id/tempTextView"
@@ -66,7 +66,7 @@
                         android:layout_below="@+id/textViewWeather"
                         android:text="No Wifi"
                         android:textColor="#000000"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/weather_30sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -77,15 +77,15 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/tempTextView"
                         android:text="Summary"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#000000"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/weather_20sp"
+                        android:textStyle="bold"
                         android:visibility="visible" />
 
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="50dp"
-                        android:layout_height="70dp"
+                        android:layout_width="@dimen/weather_w_cold_img"
+                        android:layout_height="@dimen/weather_height_cold_img"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/summaryTextView"
                         android:src="@drawable/low" />
@@ -100,13 +100,13 @@
                         android:text="Min/"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#000000"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/weather_20sp"
                         android:visibility="visible" />
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="50dp"
-                        android:layout_height="70dp"
+                        android:layout_width="@dimen/weather_w_hot_img"
+                        android:layout_height="@dimen/weather_height_hot_img"
                         android:layout_alignParentStart="false"
                         android:layout_below="@+id/summaryTextView"
                         android:layout_toEndOf="@+id/minTextView"
@@ -121,7 +121,7 @@
                         android:text="Max"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#000000"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/weather_20sp"
                         android:textStyle="bold"
                         android:visibility="visible" />
 
@@ -156,7 +156,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/weather_30sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -166,7 +166,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -194,7 +194,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/weather_30sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -204,7 +204,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -232,7 +232,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/weather_30sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -242,7 +242,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -275,13 +275,13 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/iconImage1"
-                    android:layout_width="90dp"
-                    android:layout_height="75dp"
+                    android:layout_width="@dimen/weather_w_weather_img"
+                    android:layout_height="@dimen/weather_height_weather_img"
                     android:src="@drawable/weather" />
 
                 <TextView
@@ -292,7 +292,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
 
                 <TextView
                     android:id="@+id/tempMaxTextV1"
@@ -301,7 +301,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -311,7 +311,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
 
             </LinearLayout>
 
@@ -331,13 +331,13 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/iconImage2"
-                    android:layout_width="90dp"
-                    android:layout_height="75dp"
+                    android:layout_width="@dimen/weather_w_weather_img"
+                    android:layout_height="@dimen/weather_height_weather_img"
                     android:contentDescription="i2"
                     android:src="@drawable/weather" />
 
@@ -349,7 +349,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
 
                 <TextView
                     android:id="@+id/tempMaxTextV2"
@@ -358,7 +358,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -368,7 +368,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
 
             </LinearLayout>
 
@@ -388,13 +388,13 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/iconImage3"
-                    android:layout_width="90dp"
-                    android:layout_height="75dp"
+                    android:layout_width="@dimen/weather_w_weather_img"
+                    android:layout_height="@dimen/weather_height_weather_img"
                     android:contentDescription="i3"
                     android:src="@drawable/weather" />
 
@@ -406,7 +406,7 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
 
                 <TextView
                     android:id="@+id/tempMaxTextV3"
@@ -415,7 +415,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/weather_20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -425,7 +425,7 @@
                     android:text="@string/_0_deg"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/weather_20sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

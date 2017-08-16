@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ideaone.reveraproject1">
+    package="com.ideaone.reveraprojectapp1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!--     for samsung devices    -->
+    <uses-permission android:name="com.samsung.permission.SSENSOR_HRM_RAW_PPG" />
+    <uses-permission android:name="com.samsung.permission.HRM_EXT" />
+    <uses-permission android:name="com.samsung.permission.SSENSOR" />
+    <uses-permission android:name="com.samsung.helphub.permission.write_data" />
+    <uses-permission android:name="com.samsung.helphub.permission.get_data" />
+    <uses-permission android:name="com.samsung.helphub.permission.help" />
+    <!--  -->
 
     <application
         android:allowBackup="true"
@@ -25,7 +37,7 @@
 
         <!-- auto-boot up -->
         <receiver
-            android:name="com.ideaone.reveraproject1.yourActivityRunOnStartup"
+            android:name="com.ideaone.reveraprojectapp1.yourActivityRunOnStartup"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
@@ -40,7 +52,7 @@
         </receiver>
 
         <activity
-            android:name="com.ideaone.reveraproject1.MainActivity"
+            android:name="com.ideaone.reveraprojectapp1.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
