@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -36,26 +37,46 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
     private int actionId = 100;
     private boolean isLogoSelected = false;
     FragmentManager fm;
+    // set 1
     HomeFragment homeFragment;
     WeatherFragment2 weatherFragment;
     NewsFragment newsFragment;
     MenuFragment menuFragment;
     PromoFragment promoFragment;
     RecreationFragment recreationFragment;
-    CalendarFragment calendarFragment;
     MessagesFragment messages;
     //GalleryFragment galleryFragment;
     GallPhotoFragment galleryFragment;
+
+    // set 2
+    ReadFragment readFragment;
+    MusicFragment musicFragment;
+    VideoFragment videoFragment;
+    CalendarFragment calendarFragment;
+    SocialFragment socialFragment;
+    GamesFragment gamesFragment;
+    HelpFragment helpFragment;
+    InfoFragment infoFragment;
+
+    // first set
     ImageView logoView;
     ImageView weatherBtn;
     ImageView newsBtn;
     ImageView menuBtn;
     ImageView recreationBtn;
-    ImageView calendarBtn;
     ImageView promoBtn;
     ImageView bulletinBtn;
     ImageView galleryBtn;
     ImageView cameraBtn;
+    // second set
+    ImageView readView;
+    ImageView musicView;
+    ImageView videoView;
+    ImageView calendarBtn;
+    ImageView socialView;
+    ImageView gamesView;
+    ImageView helpView;
+    ImageView infoView;
 
     int tempMinute = 0;
     int tempHour = -1;
@@ -79,23 +100,44 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
         newsBtn = (ImageView) findViewById(R.id.news);
         menuBtn = (ImageView) findViewById(R.id.menu);
         recreationBtn = (ImageView) findViewById(R.id.recreation);
-        calendarBtn = (ImageView) findViewById(R.id.calendar);
         promoBtn = (ImageView) findViewById(R.id.promo);
         bulletinBtn = (ImageView) findViewById(R.id.bulletin);
         galleryBtn = (ImageView) findViewById(R.id.gallery);
         cameraBtn = (ImageView) findViewById(R.id.camera);
 
+        readView = (ImageView) findViewById(R.id.read);
+        musicView = (ImageView) findViewById(R.id.music);
+        videoView = (ImageView) findViewById(R.id.movies);
+        calendarBtn = (ImageView) findViewById(R.id.calendar);
+        socialView = (ImageView) findViewById(R.id.chat);
+        gamesView = (ImageView) findViewById(R.id.games);
+        helpView = (ImageView) findViewById(R.id.nurse);
+        infoView = (ImageView) findViewById(R.id.info);
+
+
         fm = getFragmentManager();
+        // set 1
         homeFragment = new HomeFragment();
         weatherFragment = new WeatherFragment2();
         newsFragment = new NewsFragment();
         menuFragment = new MenuFragment();
         promoFragment = new PromoFragment();
         recreationFragment = new RecreationFragment();
-        calendarFragment = new CalendarFragment();
         //galleryFragment = new GalleryFragment();
         galleryFragment = new GallPhotoFragment();
         messages = new MessagesFragment();
+
+        // set 2
+        readFragment = new ReadFragment();
+        musicFragment = new MusicFragment();
+        videoFragment = new VideoFragment();
+        calendarFragment = new CalendarFragment();
+        socialFragment = new SocialFragment();
+        gamesFragment = new GamesFragment();
+        helpFragment = new HelpFragment();
+        infoFragment = new InfoFragment();
+
+
         if (isNetworkAvailable()) {
             fragmentReplace(fm, homeFragment);
         } else {
@@ -200,14 +242,6 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
                 fragmentReplace(fm, recreationFragment);
             }
         });
-        calendarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                storeAndRestoreState(v);
-                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.calendar_select));
-                fragmentReplace(fm, calendarFragment);
-            }
-        });
         promoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,6 +283,74 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
                 //******** with Camera ********//
             }
         });
+
+        /***set 2*/
+
+        readView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.read_select));
+                fragmentReplace(fm, readFragment);
+            }
+        });
+        musicView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.music_select));
+                fragmentReplace(fm, musicFragment);
+            }
+        });
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.movies_select));
+                fragmentReplace(fm, videoFragment);
+            }
+        });
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.calendar_select));
+                fragmentReplace(fm, calendarFragment);
+            }
+        });
+        socialView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.chat_select));
+                fragmentReplace(fm, socialFragment);
+            }
+        });
+        gamesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.games_select));
+                fragmentReplace(fm, gamesFragment);
+            }
+        });
+        helpView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.nurse_select));
+                fragmentReplace(fm, helpFragment);
+            }
+        });
+        infoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeAndRestoreState(v);
+                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.info_select));
+                fragmentReplace(fm, infoFragment);
+            }
+        });
+
     }
 
     //Timer for checking if idle
