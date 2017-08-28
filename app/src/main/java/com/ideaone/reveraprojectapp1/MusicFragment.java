@@ -24,7 +24,28 @@ public class MusicFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_music, container, false);
 
+        v.findViewById(R.id.app1).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app2).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app3).setOnClickListener(buttonClickListener);
+
         return v;
     }
+
+    private View.OnClickListener buttonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.app1:
+                    new NewActivity().startNewActivity(v.getContext(), "com.clearchannel.iheartradio.controller");
+                    break;
+                case R.id.app2:
+                    new NewActivity().startNewActivity(v.getContext(), "com.spotify.music");
+                    break;
+                case R.id.app3:
+                    new NewActivity().startNewActivity(v.getContext(), "deezer.android.app");
+                    break;
+            }
+        }
+    };
 
 }

@@ -24,7 +24,31 @@ public class VideoFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_video, container, false);
 
+        v.findViewById(R.id.app1).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app2).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app3).setOnClickListener(buttonClickListener);
+
         return v;
     }
+
+    private View.OnClickListener buttonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.app1:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "org.xbmc.kodi");
+                    break;
+                case R.id.app2:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "com.google.android.youtube");
+                    break;
+                case R.id.app3:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "com.gotv.crackle.handset");
+                    break;
+            }
+        }
+    };
 
 }

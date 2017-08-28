@@ -21,12 +21,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/app3"
+            android:id="@+id/app1"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:padding="1dp"
-            android:text="Music Stream" />
+            android:text="Radio Stream" />
 
         <Button
             android:id="@+id/app2"
@@ -37,12 +37,12 @@
             android:text="Spotify" />
 
         <Button
-            android:id="@+id/app1"
+            android:id="@+id/app3"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:padding="1dp"
-            android:text="Radio Stream" />
+            android:text="Music Stream" />
     </LinearLayout>
 
     <LinearLayout

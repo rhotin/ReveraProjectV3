@@ -21,12 +21,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/app3"
+            android:id="@+id/app1"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:padding="1dp"
-            android:text="Read App 1" />
+            android:text="Kindle" />
 
         <Button
             android:id="@+id/app2"
@@ -34,15 +34,15 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:padding="1dp"
-            android:text="Read App 2" />
+            android:text="Google Books" />
 
         <Button
-            android:id="@+id/app1"
+            android:id="@+id/app3"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:padding="1dp"
-            android:text="Newspaper" />
+            android:text="Google News" />
     </LinearLayout>
 
     <LinearLayout
