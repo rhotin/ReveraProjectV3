@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment implements MenuDownload.Communicator {
-//
     String locationSelected;
 
     TextView menu_title, menu_lunch, menu_dinner;
