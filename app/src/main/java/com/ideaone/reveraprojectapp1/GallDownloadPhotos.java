@@ -61,7 +61,7 @@ public class GallDownloadPhotos extends AsyncTask<Void, Integer, Void> {
                 String photo_ext = data_arr.getJSONObject(i).getString("ext");
                 String photo_name = data_arr.getJSONObject(i).getString("handle");
                 String photoID = data_arr.getJSONObject(i).getString("ID");
-                String image_url = "http://static-a.reveraconnect.com/250/" + photo_name + "." + photo_ext;
+                String image_url = "http://static-a." + HomeFragment.companySelected + "/250/" + photo_name + "." + photo_ext;
                 //  String image_url_full = "http://static-a.reveraconnect.com/full/" + photo_name +"."+ photo_ext;
 
                 URL downloadURL = new URL(image_url);

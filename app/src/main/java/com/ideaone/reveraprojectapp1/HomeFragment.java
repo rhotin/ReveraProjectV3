@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,14 +43,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 
 public class HomeFragment extends Fragment {
     View V;
+    public static String promoType = "Announcement";
 
+    public static String companySelected;
     public static String locationSelected;
-
 
     //00000.1.71368 = waterloo, ontario / kitchener
     //00000.76.71622 = london, ontario
@@ -105,6 +105,7 @@ public class HomeFragment extends Fragment {
         final SharedPreferences.Editor editor = prefs.edit();
 
         locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
+        companySelected = prefs.getString("company", getString(R.string.ReveraCompany));
 
         if (locationSelected.equals("leaside-14")) {
             locationSelected = "leaside";
@@ -233,13 +234,13 @@ public class HomeFragment extends Fragment {
                     LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                     View promptView = layoutInflater.inflate(R.layout.dialog_password, null);
 
-                    ArrayList selectLocationList = new ArrayList<String>();
-                    DownloadLocations downloadTask = new DownloadLocations();
-                    try {
-                        selectLocationList = downloadTask.execute().get();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                   // ArrayList selectLocationList = new ArrayList<String>();
+                   // DownloadLocations downloadTask = new DownloadLocations();
+                   // try {
+                   //     selectLocationList = downloadTask.execute().get();
+                   // } catch (ExecutionException | InterruptedException e) {
+                   //     e.printStackTrace();
+                   // }
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Settings");
@@ -247,11 +248,17 @@ public class HomeFragment extends Fragment {
                     builder.setView(promptView);
                     final EditText input = (EditText) promptView.findViewById(R.id.userInput);
                     builder.setCancelable(false);
-                    final ArrayList<String> finalSelectLocationList = selectLocationList;
+                  //  final ArrayList<String> finalSelectLocationList = selectLocationList;
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (input.getText().toString().equals("Idea12345")) {
+
+                                Intent intent = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
+                                startActivity(intent);
+                                dialog.dismiss();
+
+                                /*
                                 final String[] selectLocation = new String[finalSelectLocationList.size()];
                                 for (int i = 0; i < finalSelectLocationList.size(); i++) {
                                     selectLocation[i] = finalSelectLocationList.get(i);
@@ -266,6 +273,8 @@ public class HomeFragment extends Fragment {
                                         locationSelected = selectLocation[which];
                                         Toast.makeText(getActivity(), selectLocation[which] + " Selected",
                                                 Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
+                                        startActivity(intent);
                                         dialog.dismiss();
                                     }
                                 });
@@ -278,6 +287,7 @@ public class HomeFragment extends Fragment {
                                         });
                                 AlertDialog alert = builder.create();
                                 alert.show();
+                                */
 
                             } else {
                                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();

@@ -2,9 +2,7 @@ package com.ideaone.reveraprojectapp1;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -49,8 +47,6 @@ import java.util.List;
 
 public class CameraFragment extends Fragment {
 
-    String locationSelected = HomeFragment.locationSelected;
-
     String URL;
 
     private static final int CAMERA_REQUEST = 1888;
@@ -67,14 +63,7 @@ public class CameraFragment extends Fragment {
                              Bundle savedInstanceState) {
         V = inflater.inflate(R.layout.camera_fragment, container, false);
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-
-        if (locationSelected.equals("leaside-14")) {
-            locationSelected = "leaside";
-        }
-
-        URL = "http://revera.mxs-s.com/displays/"+locationSelected+"/albums.json";
+        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/albums.json";
 
         new getAlbumsThumbnail().execute();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -182,7 +171,7 @@ public class CameraFragment extends Fragment {
             HttpClient httpClient = new DefaultHttpClient();
 
             // using POST method
-            HttpPost httpPostRequest = new HttpPost("http://revera.mxs-s.com/albums/" + album_handle + "/537e5b67c0af973c7900002c/add.json");
+            HttpPost httpPostRequest = new HttpPost("http://" + HomeFragment.companySelected + "/albums/" + album_handle + "/537e5b67c0af973c7900002c/add.json");
             Log.e("LOG", album_handle + "");
             try {
 
@@ -237,7 +226,7 @@ public class CameraFragment extends Fragment {
                 upload.setBackgroundColor(getResources().getColor(R.color.side_menu_color));
                 Toast.makeText(getActivity().getApplicationContext(), "Upload successful", Toast.LENGTH_LONG).show();
                 upload.setOnClickListener(null);
-            }catch(IllegalStateException e){
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
         }
@@ -284,8 +273,7 @@ public class CameraFragment extends Fragment {
             if (result != null)
                 try {
                     album_handle = result.get(0);
-                }
-                catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
 
                 }
         }
@@ -313,14 +301,14 @@ public class CameraFragment extends Fragment {
 
                 // Extract value of "messages" key -- a List
                 JSONArray data = responseObject.getJSONArray(DATA_MAIN);
-                JSONObject last_album = data.getJSONObject(data.length()-1);
+                JSONObject last_album = data.getJSONObject(data.length() - 1);
                 for (int i = 0; i < data.length(); i++) {
                     last_album = data.getJSONObject(i);
                     if (last_album.getString("title").equals("Recent Photos")) {
                         result.add(last_album.getString(HANDLE_TAG));
                     }
                 }
-                if (result.isEmpty()){
+                if (result.isEmpty()) {
                     last_album = data.getJSONObject(0);
                     result.add(last_album.getString(HANDLE_TAG));
                 }

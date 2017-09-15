@@ -40,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:paddingTop="10dp"
-                    android:text="Loading Menu"
+                    android:text="LOADING..."
                     android:textSize="@dimen/menu_lunch" />
             </LinearLayout>
 

@@ -9,6 +9,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -16,13 +17,11 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -81,10 +80,10 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
     int tempMinute = 0;
     int tempHour = -1;
 
-
     final int timeoutValue = 60; // 30 * 1000 = 30000 = 30 seconds
-
     boolean finishFlag = false;
+
+    Boolean showPhase2, cameraS;
 
 
     @Override
@@ -94,6 +93,9 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
         setContentView(R.layout.activity_main);
 
         hideNavBar();
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        showPhase2 = prefs.getBoolean("phaseS", false);
+        cameraS = prefs.getBoolean("cameraS", false);
 
         logoView = (ImageView) findViewById(R.id.logo);
         weatherBtn = (ImageView) findViewById(R.id.weather);
@@ -114,6 +116,11 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
         helpView = (ImageView) findViewById(R.id.nurse);
         infoView = (ImageView) findViewById(R.id.info);
 
+        if (cameraS) {
+            cameraBtn.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.camera));
+        } else {
+            cameraBtn.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.exit));
+        }
 
         fm = getFragmentManager();
         // set 1
@@ -188,23 +195,25 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
             }
         });
 
-        logoView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (!isLogoSelected) {
-                    logoView.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.logo_green));
-                    findViewById(R.id.mainActionSet).setVisibility(View.GONE);
-                    findViewById(R.id.secondActionSet).setVisibility(View.VISIBLE);
-                } else {
-                    logoView.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.logo_grey));
-                    findViewById(R.id.mainActionSet).setVisibility(View.VISIBLE);
-                    findViewById(R.id.secondActionSet).setVisibility(View.GONE);
+        if (showPhase2) {
+            logoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!isLogoSelected) {
+                        logoView.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.logo_green));
+                        findViewById(R.id.mainActionSet).setVisibility(View.GONE);
+                        findViewById(R.id.secondActionSet).setVisibility(View.VISIBLE);
+                    } else {
+                        logoView.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.logo_grey));
+                        findViewById(R.id.mainActionSet).setVisibility(View.VISIBLE);
+                        findViewById(R.id.secondActionSet).setVisibility(View.GONE);
+                    }
+                    hideNavBar();
+                    isLogoSelected = !isLogoSelected;
+                    return false;
                 }
-                hideNavBar();
-                isLogoSelected = !isLogoSelected;
-                return false;
-            }
-        });
+            });
+        }
 
         weatherBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,17 +279,16 @@ public class MainActivity extends Activity implements Thread.UncaughtExceptionHa
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //******** no Camera ********//
-                //     finishFlag = true;
-                //     MainActivity.this.finish();
-                //******** no Camera ********//
-
-                //******** with Camera ********//
-                storeAndRestoreState(v);
-                v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.camera_select));
-                fragmentReplace(fm, new CameraFragment());
-                //******** with Camera ********//
+                if (cameraS) {
+                    //******** with Camera ********//
+                    storeAndRestoreState(v);
+                    v.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.camera_select));
+                    fragmentReplace(fm, new CameraFragment());
+                } else {
+                    //******** no Camera ********//
+                    finishFlag = true;
+                    MainActivity.this.finish();
+                }
             }
         });
 

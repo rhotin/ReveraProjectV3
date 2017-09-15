@@ -3,7 +3,6 @@ package com.ideaone.reveraprojectapp1;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
@@ -30,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment implements MenuDownload.Communicator {
-    String locationSelected;
+    //String locationSelected;
 
     TextView menu_title, menu_lunch, menu_dinner;
     Date resultdate, requested_date, resultdate1;
@@ -50,13 +49,6 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.menu_fragment, container, false);
-
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-
-        if (locationSelected.equals("leaside-14")) {
-            locationSelected = "leaside";
-        }
 
         db = new DBAdapterMenu(getActivity().getBaseContext());
 
@@ -99,7 +91,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         resultdate1 = calendar.getTime();
         sdf3 = new SimpleDateFormat("EEEE", Locale.CANADA);
         menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + "Today" + "</b>"));
-     //   menu_title.setTextSize(40);
+        //   menu_title.setTextSize(40);
         menu_title.setGravity(Gravity.CENTER);
 
         prev = (ImageView) V.findViewById(R.id.menu_side_prev_day_button);
@@ -115,7 +107,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, ++dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -123,11 +115,11 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                     sdf3 = new SimpleDateFormat("EEEE", Locale.CANADA);
                     if (Build.VERSION.SDK_INT >= 24) {
                         menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + sdf3.format(resultdate1) + " (" + sdf.format(resultdate1) + ")</b>", Html.FROM_HTML_MODE_LEGACY));
-                    } else{
+                    } else {
                         menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + sdf3.format(resultdate1) + " (" + sdf.format(resultdate1) + ")</b>"));
                     }
                 }
-            //    menu_title.setTextSize(40);
+                //    menu_title.setTextSize(40);
                 menu_title.setGravity(Gravity.CENTER);
 
                 UInoWifi(sdf_date.format(requested_date));
@@ -155,7 +147,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, --dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
 
                 if (dateCounter - 1 == -1) {
@@ -164,7 +156,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                     sdf3 = new SimpleDateFormat("EEEE", Locale.CANADA);
                     menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + sdf3.format(resultdate1) + " (" + sdf.format(resultdate1) + ")</b>"));
                 }
-             //   menu_title.setTextSize(40);
+                //   menu_title.setTextSize(40);
                 menu_title.setGravity(Gravity.CENTER);
 
                 UInoWifi(sdf_date.format(requested_date));
@@ -190,7 +182,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         dateCounter = 0;
         calendar.add(Calendar.DATE, dateCounter);
         requested_date = calendar.getTime();
-        URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
         Log.e("MenuURL", "" + URL);
 
         if (isNetworkAvailable()) {
@@ -208,15 +200,15 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
         SimpleDateFormat date1 = new SimpleDateFormat("MMM dd", Locale.CANADA);
         requested_date = calendar.getTime();
-        URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/menu.json?date=" + sdf.format(requested_date) + "&nohtml=1";
-        menu_lunch.setText( R.string.loadingMenuText);
+        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf.format(requested_date) + "&nohtml=1";
+        menu_lunch.setText(R.string.loadingMenuText);
         menu_dinner.setText("");
         //   date.setText(Html.fromHtml("<b>MENU</b>"));
         //   date.setGravity(Gravity.CENTER);
         //   date.setTextSize(35);
         sdf3 = new SimpleDateFormat("EEEE", Locale.CANADA);
         menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + sdf3.format(requested_date) + " (" + date1.format(requested_date) + ")</b>"));
-      //  menu_title.setTextSize(40);
+        //  menu_title.setTextSize(40);
         menu_title.setGravity(Gravity.CENTER);
         next.setImageDrawable(getResources().getDrawable(R.drawable.today));
         prev.setImageDrawable(null);
@@ -287,7 +279,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
-       // db.close();
+        // db.close();
     }
 
     @Override
@@ -341,7 +333,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                         menu_dinner.append(Html.fromHtml(result_dinner.get(loopCount - 1) + "<br/>---<br/>"));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             menu_lunch.setText(Html.fromHtml("LOADING....."));
         }
@@ -370,7 +362,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             decorView.setSystemUiVisibility(uiOptions);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }

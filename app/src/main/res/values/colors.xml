@@ -2,7 +2,7 @@
 <resources>
     <color name="action_background">#0000FF</color>
     <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="dinner_background">#ffffe0</color>
     <!--<color name="side_menu_color">#CC33FF</color>-->
     <color name="side_menu_color">#33adff</color>

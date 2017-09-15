@@ -2,7 +2,6 @@ package com.ideaone.reveraprojectapp1;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
@@ -33,8 +32,6 @@ import java.util.Calendar;
  */
 public class MessagesFragment extends Fragment implements MessagesDownload.Communicator {
 
-    String locationSelected = HomeFragment.locationSelected;
-
     public static String promoType = "Announcement";
     public static String promoType2 = "Birthday";
     int flipTime = 15000; //7000 / 1000 = 7 seconds
@@ -45,7 +42,7 @@ public class MessagesFragment extends Fragment implements MessagesDownload.Commu
 
     public static ArrayList<PromoObject> promosArrayList = new ArrayList<>();
 
-    public static String ANNOUNCEMENT_URL = "";
+    //public static String ANNOUNCEMENT_URL = "";
 
     MessagesDBAdapter db;
 
@@ -66,13 +63,6 @@ public class MessagesFragment extends Fragment implements MessagesDownload.Commu
 
         View V = inflater.inflate(R.layout.messages_fragment, container, false);
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-
-        if (locationSelected.equals("leaside-14")) {
-            locationSelected = "leaside";
-        }
-
         mAnnouncementFlipper = (ViewFlipper) V.findViewById(R.id.viewFlipperAnnouncement);
         left_arrow = (ImageView) V.findViewById(R.id.left_arrow);
         right_arrow = (ImageView) V.findViewById(R.id.right_arrow);
@@ -84,7 +74,7 @@ public class MessagesFragment extends Fragment implements MessagesDownload.Commu
 
         db = new MessagesDBAdapter(getActivity().getApplicationContext());
 
-        ANNOUNCEMENT_URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/promos.json";
+        //ANNOUNCEMENT_URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/promos.json";
         //ANNOUNCEMENT_URL = "http://stage-condo.ideaone.tv/locations/westlake-2/campaigns.json";
 
         // Set in/out flipping animations

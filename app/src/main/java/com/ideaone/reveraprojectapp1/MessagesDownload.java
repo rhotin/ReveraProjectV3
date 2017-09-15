@@ -34,9 +34,6 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
 
     MessagesDBAdapter db;
 
-    String locationSelected = HomeFragment.locationSelected.equalsIgnoreCase("") ?
-            "leaside" : HomeFragment.locationSelected;
-
     MessagesDownload(MessagesFragment c) {
         this.context = c;
         db = new MessagesDBAdapter(c.getActivity().getApplicationContext());
@@ -46,7 +43,7 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void... params) {
         URL theUrl;
         try {
-            theUrl = new URL("http://revera.mxs-s.com/displays/" + locationSelected + "/promos.json");
+            theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/promos.json");
             BufferedReader reader = new BufferedReader
                     (new InputStreamReader(theUrl.openConnection().getInputStream(), "UTF-8"));
             String announcement_json = reader.readLine();
@@ -197,7 +194,7 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
                         //options.inJustDecodeBounds = false;
                         try {
                             backgroundBmp = BitmapFactory.decodeStream(inputStreamT, null, options);
-                        }catch (OutOfMemoryError e){
+                        } catch (OutOfMemoryError e) {
                             e.printStackTrace();
                         }
                     }

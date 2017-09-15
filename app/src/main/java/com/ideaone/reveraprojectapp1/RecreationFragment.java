@@ -29,6 +29,7 @@ import java.util.List;
 
 public class RecreationFragment extends Fragment implements RecreationDownload.Communicator {
 
+    String companySelected;
     String locationSelected;
 
     int itemsToStore = 30;
@@ -56,13 +57,14 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
 
         final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
+        companySelected = prefs.getString("company", getString(R.string.ReveraCompany));
 
         //if (locationSelected.equals("leaside-14")) {
         //    locationSelected = "leaside";
         // }
 
         titleDate = new SimpleDateFormat("EEE (MMM dd)");
-        URLLegend = "http://revera.mxs-s.com/displays/" + locationSelected + "/legends.json";
+        URLLegend = "http://" + companySelected + "/displays/" + locationSelected + "/legends.json";
 
         db = new DBAdapterRecreation(getActivity().getBaseContext());
 
@@ -111,7 +113,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, ++dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -146,7 +148,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, --dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -182,7 +184,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, dateCounter);
         requested_date = calendar.getTime();
-        URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
 
         //  date = (TextView) V.findViewById(R.id.menu_side_date);
         sdf = new SimpleDateFormat("MMM dd");
@@ -212,7 +214,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat date1 = new SimpleDateFormat("MMM dd");
         SimpleDateFormat day1 = new SimpleDateFormat("EEEE");
-        URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/recreation.json?date=" + sdf.format(calendar.getTime()) + "&nohtml=1";
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf.format(calendar.getTime()) + "&nohtml=1";
         tv_rec.setText(R.string.recreationLoading);
         recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + day1.format(calendar.getTime()) + " (" + date1.format(calendar.getTime()) + ")</b>"));
         //date.setText(Html.fromHtml("<b>" + day1.format(calendar.getTime()) + "<br/>" + date1.format(calendar.getTime()) + "</b>"));

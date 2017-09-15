@@ -27,6 +27,9 @@ public class VideoFragment extends Fragment {
         v.findViewById(R.id.app1).setOnClickListener(buttonClickListener);
         v.findViewById(R.id.app2).setOnClickListener(buttonClickListener);
         v.findViewById(R.id.app3).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app4).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app5).setOnClickListener(buttonClickListener);
+        v.findViewById(R.id.app6).setOnClickListener(buttonClickListener);
 
         return v;
     }
@@ -46,6 +49,18 @@ public class VideoFragment extends Fragment {
                 case R.id.app3:
                     // do something
                     new NewActivity().startNewActivity(v.getContext(), "com.gotv.crackle.handset");
+                    break;
+                case R.id.app4:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "com.netflix.mediaclient");
+                    break;
+                case R.id.app5:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "com.tubitv");
+                    break;
+                case R.id.app6:
+                    // do something
+                    new NewActivity().startNewActivity(v.getContext(), "ca.bellmedia.cravetv");
                     break;
             }
         }

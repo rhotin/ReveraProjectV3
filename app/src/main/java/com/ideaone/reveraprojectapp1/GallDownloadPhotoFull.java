@@ -37,11 +37,11 @@ public class GallDownloadPhotoFull extends AsyncTask<Void, Integer, Void> {
             String photo_ext = GallPhotoFragment.photoExt;
             String photo_name = GallPhotoFragment.photoName;
             String photo_ID = GallPhotoFragment.photoID;
-         //   String photo_thummb = GallPhotoFragment.photoThumb;
+            //   String photo_thummb = GallPhotoFragment.photoThumb;
 
 
             // String image_url = "http://static-a.reveraconnect.com/250/" + photo_name + "." + photo_ext;
-            String image_url_full = "http://static-a.reveraconnect.com/full/" + photo_name + "." + photo_ext;
+            String image_url_full = "http://static-a." + HomeFragment.companySelected + "/full/" + photo_name + "." + photo_ext;
 
             URL downloadURL = new URL(image_url_full);
             HttpURLConnection conn = (HttpURLConnection) downloadURL.openConnection();
@@ -54,7 +54,7 @@ public class GallDownloadPhotoFull extends AsyncTask<Void, Integer, Void> {
                 Bitmap bmp2 = BitmapFactory.decodeStream(inputStream2);
                 */
 
-            GallPhotoObject obj = new GallPhotoObject(photo_creatorID, photo_created,photo_class,
+            GallPhotoObject obj = new GallPhotoObject(photo_creatorID, photo_created, photo_class,
                     photo_type, photo_ext, photo_name, photo_ID, null, bmp);
             photosArrayList.add(obj);
 

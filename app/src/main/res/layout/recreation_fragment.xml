@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:lineSpacingExtra="@dimen/rec_spacing"
                     android:padding="20dp"
-                    android:text="Loading Recreation Activities"
+                    android:text="Loading..."
                     android:textSize="@dimen/rec_text" />
             </ScrollView>
         </LinearLayout>

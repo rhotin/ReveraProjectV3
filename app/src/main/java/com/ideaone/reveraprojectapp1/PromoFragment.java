@@ -2,7 +2,6 @@ package com.ideaone.reveraprojectapp1;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
@@ -44,7 +43,7 @@ public class PromoFragment extends Fragment implements PromoDownload.Communicato
 
     ArrayList<PromoObject> promosArrayList = new ArrayList<>();
 
-    public static String ANNOUNCEMENT_URL = "";
+  //  public static String ANNOUNCEMENT_URL = "";
 
     PromoDBAdapter db;
     VideoView vidView;
@@ -69,13 +68,6 @@ public class PromoFragment extends Fragment implements PromoDownload.Communicato
 
         View V = inflater.inflate(R.layout.promo_fragment, container, false);
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-
-        if (locationSelected.equals("leaside-14")) {
-            locationSelected = "leaside";
-        }
-
         mAnnouncementFlipper = (ViewFlipper) V.findViewById(R.id.viewFlipperAnnouncement);
         left_arrow = (ImageView) V.findViewById(R.id.left_arrow);
         right_arrow = (ImageView) V.findViewById(R.id.right_arrow);
@@ -86,9 +78,6 @@ public class PromoFragment extends Fragment implements PromoDownload.Communicato
         //messageText.setVisibility(View.GONE);
 
         db = new PromoDBAdapter(getActivity().getApplicationContext());
-
-        ANNOUNCEMENT_URL = "http://revera.mxs-s.com/displays/" + locationSelected + "/promos.json";
-        //ANNOUNCEMENT_URL = "http://stage-condo.ideaone.tv/locations/westlake-2/campaigns.json";
 
         // Set in/out flipping animations
         mAnnouncementFlipper.setInAnimation(getActivity().getApplicationContext(), android.R.anim.fade_in);

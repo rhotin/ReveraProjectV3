@@ -3,7 +3,6 @@ package com.ideaone.reveraprojectapp1;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class GallPhotoFragment extends Fragment implements GallDownloadAlbums.CommunicatorA, GallDownloadPhotos.Communicator, GallDownloadPhotoFull.CommunicatorF {
-    String locationSelected;
+    //String locationSelected;
 
     static String AlURL;
 
@@ -76,17 +75,10 @@ public class GallPhotoFragment extends Fragment implements GallDownloadAlbums.Co
         //AlbumObject obj = getActivity().getIntent().getParcelableExtra("theObject");
         //newRURL = RURL + obj.albumID;
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-
-        if (locationSelected.equals("leaside-14")) {
-            locationSelected = "leaside";
-        }
-
         dbAlb = new DBAdapterAlbums(getActivity().getBaseContext());
         dbPhoto = new DBAdapterPhotos(getActivity().getBaseContext());
 
-        AlURL = "http://revera.mxs-s.com/displays/" + locationSelected + "/albums.json?album=";
+        AlURL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/albums.json?album=";
 
         albumListView = (ListView) V.findViewById(R.id.listViewA);
         progressBarA = (ProgressBar) V.findViewById(R.id.progressBarA);
