@@ -9,7 +9,7 @@
     android:layout_centerInParent="false"
     android:gravity="center"
     android:orientation="horizontal"
-    tools:context="com.ideaone.reveraprojectapp1.VideoFragment">
+    tools:context="com.ideaone.tabletapp1.VideoFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
