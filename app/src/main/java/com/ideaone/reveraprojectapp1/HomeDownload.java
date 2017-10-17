@@ -25,22 +25,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class PromoDownload extends AsyncTask<Void, Integer, Void> {
+public class HomeDownload extends AsyncTask<Void, Integer, Void> {
     ArrayList<PromoObject> objectArrayList = new ArrayList<>();
     Communicator context;
 
-    PromoDBAdapter db;
+    HomeDBAdapter db;
 
-    PromoDownload(PromoFragment c) {
+    HomeDownload(HomeFragment c) {
         this.context = c;
-        db = new PromoDBAdapter(c.getActivity().getApplicationContext());
+        db = new HomeDBAdapter(c.getActivity().getApplicationContext());
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         URL theUrl;
         try {
-            theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/promos.json");
+            theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/settings/promos.json");
             //theUrl = new URL("http://revera.mxs-s.com/displays/" + HomeFragment.locationSelected + "/promos.json?location=kiosk");
             BufferedReader reader = new BufferedReader
                     (new InputStreamReader(theUrl.openConnection().getInputStream(), "UTF-8"));
@@ -202,7 +202,7 @@ public class PromoDownload extends AsyncTask<Void, Integer, Void> {
                     url = data_arr.getJSONObject(i).getString("url");
                 }
 
-                if (promoType.equalsIgnoreCase(PromoFragment.promoType) || promoType.equalsIgnoreCase(PromoFragment.promoType2)) {
+                if (promoType.equalsIgnoreCase(HomeFragment.promoType) && name.equals("TabletLogo")) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
                     Date nowT = new Date(System.currentTimeMillis());
                     String now = sdf.format(nowT);
@@ -260,7 +260,7 @@ public class PromoDownload extends AsyncTask<Void, Integer, Void> {
             try {
                 Bitmap photo = obj.photo;
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                photo.compress(Bitmap.CompressFormat.PNG, 90, stream);
                 imgStream = stream.toByteArray();
                 //stream.reset();
             } catch (OutOfMemoryError e) {
@@ -272,7 +272,7 @@ public class PromoDownload extends AsyncTask<Void, Integer, Void> {
             try {
                 Bitmap bmpBack = obj.backPhoto;
                 ByteArrayOutputStream streamBack = new ByteArrayOutputStream();
-                bmpBack.compress(Bitmap.CompressFormat.JPEG, 90, streamBack);
+                bmpBack.compress(Bitmap.CompressFormat.PNG, 90, streamBack);
                 imgStreamBack = streamBack.toByteArray();
                 //streamBack.reset();
             } catch (OutOfMemoryError e) {

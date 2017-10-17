@@ -3,7 +3,6 @@ package com.ideaone.reveraprojectapp1;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,9 +28,6 @@ import java.util.List;
 
 public class RecreationFragment extends Fragment implements RecreationDownload.Communicator {
 
-    String companySelected;
-    String locationSelected;
-
     int itemsToStore = 30;
 
     static String URLLegend;
@@ -55,16 +51,14 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.recreation_fragment, container, false);
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-        companySelected = prefs.getString("company", getString(R.string.ReveraCompany));
-
         //if (locationSelected.equals("leaside-14")) {
         //    locationSelected = "leaside";
         // }
 
         titleDate = new SimpleDateFormat("EEE (MMM dd)");
-        URLLegend = "http://" + companySelected + "/displays/" + locationSelected + "/legends.json";
+        URLLegend = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/legends.json";
+
+        Log.e("URLLegend", URLLegend);
 
         db = new DBAdapterRecreation(getActivity().getBaseContext());
 
@@ -113,7 +107,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, ++dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -148,7 +142,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, --dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -184,7 +178,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, dateCounter);
         requested_date = calendar.getTime();
-        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
 
         //  date = (TextView) V.findViewById(R.id.menu_side_date);
         sdf = new SimpleDateFormat("MMM dd");
@@ -214,7 +208,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat date1 = new SimpleDateFormat("MMM dd");
         SimpleDateFormat day1 = new SimpleDateFormat("EEEE");
-        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf.format(calendar.getTime()) + "&nohtml=1";
+        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf.format(calendar.getTime()) + "&nohtml=1";
         tv_rec.setText(R.string.recreationLoading);
         recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + day1.format(calendar.getTime()) + " (" + date1.format(calendar.getTime()) + ")</b>"));
         //date.setText(Html.fromHtml("<b>" + day1.format(calendar.getTime()) + "<br/>" + date1.format(calendar.getTime()) + "</b>"));
@@ -304,12 +298,12 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 if (result.get((loopCount) * resultItems + 1).length() != 0) {
                     if (!result.get((loopCount) * resultItems + 2).equals("")) {
                         SpannableString s = new SpannableString(Html.fromHtml("<B>" + result.get((loopCount) * resultItems) + "</B>" + getString(R.string.tab) + getString(R.string.tab) + result.get((loopCount) * resultItems + 1) + " - " + result.get((loopCount) * resultItems + 2) + "<br>"));
-                        s.setSpan(new android.text.style.LeadingMarginSpan.Standard(0, 100), 0, s.length(), 0);
+                        s.setSpan(new android.text.style.LeadingMarginSpan.Standard(0, 145), 0, s.length(), 0);
                         tv_rec.append(s);
                         //tv_rec.append(Html.fromHtml("<p><B>" + result.get((loopCount) * resultItems) + "</B>" + getString(R.string.tab) + getString(R.string.tab) + result.get((loopCount) * resultItems + 1) + " - " + result.get((loopCount) * resultItems + 2) + "<br></p>"));
                     } else {
                         SpannableString s = new SpannableString(Html.fromHtml("<B>" + result.get((loopCount) * resultItems) + "</B>" + getString(R.string.tab) + getString(R.string.tab) + result.get((loopCount) * resultItems + 1) + "<br>"));
-                        s.setSpan(new android.text.style.LeadingMarginSpan.Standard(0, 100), 0, s.length(), 0);
+                        s.setSpan(new android.text.style.LeadingMarginSpan.Standard(0, 145), 0, s.length(), 0);
                         tv_rec.append(s);
                         //tv_rec.append(Html.fromHtml("<p><B>" + result.get((loopCount) * resultItems) + "</B>" + getString(R.string.tab) + getString(R.string.tab) + result.get((loopCount) * resultItems + 1) + "<br></p>"));
                     }

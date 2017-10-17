@@ -23,10 +23,9 @@
             android:layout_gravity="left">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
                 android:id="@+id/imageViewLogo"
-                android:src="@drawable/revera_logo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="2.5" />
 
             <TextView

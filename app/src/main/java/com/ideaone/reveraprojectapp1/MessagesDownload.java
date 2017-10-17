@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Roman on 2016-12-10.
- */
 public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
     ArrayList<PromoObject> objectArrayList = new ArrayList<>();
     Communicator context;
@@ -44,6 +41,7 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
         URL theUrl;
         try {
             theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/promos.json");
+            //theUrl = new URL("http://revera.mxs-s.com/displays/" + HomeFragment.locationSelected + "/promos.json?location=kiosk");
             BufferedReader reader = new BufferedReader
                     (new InputStreamReader(theUrl.openConnection().getInputStream(), "UTF-8"));
             String announcement_json = reader.readLine();
@@ -81,7 +79,8 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
                 int showSunday = 0;
                 String text = "";
                 String url = "";
-                Bitmap bmp = null, backgroundBmp = null;
+                Bitmap bmp = null;
+                Bitmap backgroundBmp = null;
                 if (data_arr.getJSONObject(i).has("creatorID")) {
                     creatorID = data_arr.getJSONObject(i).getString("creatorID");
                 }
@@ -297,7 +296,6 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
 

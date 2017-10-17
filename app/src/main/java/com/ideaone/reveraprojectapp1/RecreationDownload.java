@@ -27,7 +27,7 @@ class RecreationDownload extends AsyncTask<Void, Integer, Void> {
     Communicator context;
 
     URL theUrl;
-    String URLLeg = RecreationFragment.URLLegend;
+ //   String URLLeg = RecreationFragment.URLLegend;
 //    AndroidHttpClient mClient = AndroidHttpClient.newInstance("");
 
     ArrayList<String> locCodes = new ArrayList<>();

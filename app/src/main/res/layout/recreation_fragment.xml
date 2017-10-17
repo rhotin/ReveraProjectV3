@@ -44,7 +44,7 @@
                     android:lineSpacingExtra="@dimen/rec_spacing"
                     android:padding="20dp"
                     android:text="Loading..."
-                    android:textSize="@dimen/rec_text" />
+                    android:textSize="40sp" />
             </ScrollView>
         </LinearLayout>
     </LinearLayout>

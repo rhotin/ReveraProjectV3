@@ -25,6 +25,6 @@
     <dimen name="menu_dinner">12sp</dimen>
 
     <dimen name="rec_title">18sp</dimen>
-    <dimen name="rec_text">12sp</dimen>
+    <dimen name="rec_text">40sp</dimen>
     <dimen name="rec_spacing">6sp</dimen>
 </resources>

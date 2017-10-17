@@ -39,7 +39,7 @@ public class PromoFragment extends Fragment implements PromoDownload.Communicato
     public static String promoType2 = "Additional Rec";
     int flipTime = 1000 * 60 * 60; //7000 / 1000 = 7 seconds
     int tempMinute = 0;
-    static int tempHour = 0;
+    int tempHour = 0;
 
     ArrayList<PromoObject> promosArrayList = new ArrayList<>();
 

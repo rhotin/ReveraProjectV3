@@ -99,7 +99,7 @@ public class WeatherFragment2 extends Fragment implements WeatherDownload2.Commu
         View V = inflater.inflate(R.layout.fragment_weather2, container, false);
 
         final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
 
         if (locationSelected.equals("leaside-14")) {
             locationSelected = "leaside";

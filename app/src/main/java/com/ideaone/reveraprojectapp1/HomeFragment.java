@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -42,12 +43,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeDownload.Communicator {
     View V;
+
     public static String promoType = "Announcement";
+    ArrayList<PromoObject> promosArrayList = new ArrayList<>();
+    HomeDBAdapter db;
+    int tempMonth = 1;
+    HomeDownload downloadHome;
 
     public static String companySelected;
     public static String locationSelected;
@@ -94,6 +101,7 @@ public class HomeFragment extends Fragment {
     HttpGetTaskWeather httpGetTaskWeather;
 
     ImageView mImageViewChoice;
+    ImageView mImageViewLogo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,10 +111,8 @@ public class HomeFragment extends Fragment {
 
         final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();
-
-        locationSelected = prefs.getString("location", getString(R.string.ReveraLocation));
-        companySelected = prefs.getString("company", getString(R.string.ReveraCompany));
-
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
         if (locationSelected.equals("leaside-14")) {
             locationSelected = "leaside";
         }
@@ -197,12 +203,16 @@ public class HomeFragment extends Fragment {
 
         // URL = "http://api.wunderground.com/api/" + APIKEY + "/conditions/q/zmw:" + weatherLocation + ".json";
         URL = "http://api.wunderground.com/api/" + APIKEY + "/conditions/q/" + weatherLocation + ".json";
-        Log.e("Home Weather",""+URL);
+        Log.e("Home Weather", "" + URL);
 
         msg1_view_authur = (TextView) V.findViewById(R.id.msgAuthur);
         msg1_view = (TextView) V.findViewById(R.id.msgText);
 
         mImageViewChoice = (ImageView) V.findViewById(R.id.imageViewChoice);
+        mImageViewLogo = (ImageView) V.findViewById(R.id.imageViewLogo);
+
+        db = new HomeDBAdapter(getActivity().getApplicationContext());
+        getAllItems();
 
         if (isNetworkAvailable()) {
             httpGetTask = new HttpGetTask();
@@ -234,13 +244,13 @@ public class HomeFragment extends Fragment {
                     LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
                     View promptView = layoutInflater.inflate(R.layout.dialog_password, null);
 
-                   // ArrayList selectLocationList = new ArrayList<String>();
-                   // DownloadLocations downloadTask = new DownloadLocations();
-                   // try {
-                   //     selectLocationList = downloadTask.execute().get();
-                   // } catch (ExecutionException | InterruptedException e) {
-                   //     e.printStackTrace();
-                   // }
+                    // ArrayList selectLocationList = new ArrayList<String>();
+                    // DownloadLocations downloadTask = new DownloadLocations();
+                    // try {
+                    //     selectLocationList = downloadTask.execute().get();
+                    // } catch (ExecutionException | InterruptedException e) {
+                    //     e.printStackTrace();
+                    // }
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Settings");
@@ -248,7 +258,7 @@ public class HomeFragment extends Fragment {
                     builder.setView(promptView);
                     final EditText input = (EditText) promptView.findViewById(R.id.userInput);
                     builder.setCancelable(false);
-                  //  final ArrayList<String> finalSelectLocationList = selectLocationList;
+                    //  final ArrayList<String> finalSelectLocationList = selectLocationList;
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -316,10 +326,172 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        if (isNetworkAvailable()) {
+            Log.e("Announce PIC", " network ");
+            if (month != tempMonth) {
+                tempMonth = month;
+                db.open();
+                db.resetDB();
+                db.close();
+            }
+            //   messageText.setText("");
+            downloadHome = new HomeDownload(this);
+            downloadHome.execute();
+            //   }
+        }else{
+            getAllItems();
+        }
+
         return V;
     }
 
+    @Override
+    public void updateUI(ArrayList<PromoObject> photosArrayList) {
+        getAllItems();
+    }
+
+    public void getAllItems() {
+        promosArrayList.clear();
+        String creatorID;
+        String created;
+        String name;
+        String zone;
+        String displayID;
+        int length;
+        int priority;
+        String dateStart;
+        String dateEnd;
+        String web;
+        String display;
+        String calendar;
+        String bulletin;
+        String kiosk;
+        String type;
+        String promoType;
+        String modified;
+        int showMonday;
+        int showTuesday;
+        int showWednesday;
+        int showThursday;
+        int showFriday;
+        int showSaturday;
+        int showSunday;
+        String url;
+        String text;
+        byte[] Image;
+        byte[] ImageBack;
+        Bitmap photo = null;
+        Bitmap backPhoto = null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = true;
+        options.inSampleSize = calculateInSampleSize(options, 300, 300);
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+
+        BitmapFactory.Options optionsBack = new BitmapFactory.Options();
+        optionsBack.inScaled = true;
+        optionsBack.inSampleSize = calculateInSampleSize(options, 200, 200);
+        optionsBack.inPreferredConfig = Bitmap.Config.RGB_565;
+
+        db.open();
+        Cursor c = db.getAllItems();
+        if (c.moveToFirst()) {
+            do {
+                creatorID = c.getString(1);
+                created = c.getString(2);
+                name = c.getString(3);
+                zone = c.getString(4);
+                displayID = c.getString(5);
+                length = c.getInt(6);
+                priority = c.getInt(7);
+                dateStart = c.getString(8);
+                dateEnd = c.getString(9);
+                web = c.getString(10);
+                display = c.getString(11);
+                calendar = c.getString(12);
+                bulletin = c.getString(13);
+                kiosk = c.getString(14);
+                type = c.getString(15);
+                promoType = c.getString(16);
+                modified = c.getString(17);
+                showMonday = c.getInt(18);
+                showTuesday = c.getInt(19);
+                showWednesday = c.getInt(20);
+                showThursday = c.getInt(21);
+                showFriday = c.getInt(22);
+                showSaturday = c.getInt(23);
+                showSunday = c.getInt(24);
+                url = c.getString(25);
+                text = c.getString(26);
+                Image = c.getBlob(27);
+                ImageBack = c.getBlob(28);
+
+                if (Image != null) {
+                    try {
+                        photo = BitmapFactory.decodeByteArray(Image, 0, Image.length, options);
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (ImageBack != null) {
+                    try {
+                        backPhoto = BitmapFactory.decodeByteArray(ImageBack, 0, ImageBack.length, optionsBack);
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                /*creatorID, created, name,
+                                    zone, displayID, length, priority, dateStart, dateEnd, web,
+                                    display, calendar, messages, type, promoType, modified, showMonday,
+                                    showTuesday, showWednesday, showThursday, showFriday, showSaturday,
+                                    showSunday, url, text, bmp
+                                    */
+                PromoObject obj = new PromoObject(creatorID, created, name, zone,
+                        displayID, length, priority, dateStart, dateEnd, web, display, calendar, bulletin,
+                        kiosk, type, promoType, modified, showMonday, showTuesday, showWednesday,
+                        showThursday, showFriday, showSaturday, showSunday, url, text, photo, backPhoto);
+                promosArrayList.add(obj);
+                photo = null;
+                setLogoImage(obj);
+            } while (c.moveToNext());
+            PromoObject ob = promosArrayList.get(0);
+            //backgroundImageView.setImageBitmap(ob.backPhoto);
+        }
+        db.close();
+    }
+
+    private void setLogoImage(final PromoObject obj) {
+        mImageViewLogo.setImageBitmap(obj.photo);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
+    }
+
     private class HttpGetTask extends AsyncTask<Void, Void, List<String>> {
+        /* ******** This is for Quote of the day (don't change)  ******** */
         private final String URL = "http://revera.mxs-s.com/displays/demo/promos.json?nohtml=1";
 
         AndroidHttpClient mClient = AndroidHttpClient.newInstance("");

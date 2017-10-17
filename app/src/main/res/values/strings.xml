@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">V1.0605 Revera</string>
+    <string name="app_name">V1.10.17 Tablet</string>
 
-    <string name="ReveraLocation">leaside</string>
-    <string name="ReveraCompany">reveraconnect.com</string>
+    <string name="RetirementLocation">leaside</string>
+    <string name="RetirementCompany">reveraconnect.com</string>
 
     <string name="_0_deg">0 deg</string>
     <string name="cweather">cWeather</string>
