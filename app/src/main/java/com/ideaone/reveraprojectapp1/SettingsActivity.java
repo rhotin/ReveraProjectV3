@@ -56,8 +56,8 @@ public class SettingsActivity extends Activity implements SettingsDownloadCompan
 
         cameraS.setChecked(prefs.getBoolean("cameraS", false));
         phaseS.setChecked(prefs.getBoolean("phaseS", false));
-        compSelectedText.setText(prefs.getString("company",""));
-        locSelectedText.setText(prefs.getString("location",""));
+        compSelectedText.setText(prefs.getString("company", ""));
+        locSelectedText.setText(prefs.getString("location", ""));
 
         cameraS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -98,6 +98,7 @@ public class SettingsActivity extends Activity implements SettingsDownloadCompan
     public void DoneClicked(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
