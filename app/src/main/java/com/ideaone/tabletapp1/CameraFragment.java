@@ -2,7 +2,9 @@ package com.ideaone.tabletapp1;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
@@ -47,8 +49,10 @@ import java.util.List;
 
 public class CameraFragment extends Fragment {
 
-    String URL;
+    String companySelected;
+    String locationSelected;
 
+    String URL;
     private static final int CAMERA_REQUEST = 1888;
     private View V;
     private Bitmap bitmap;
@@ -63,7 +67,15 @@ public class CameraFragment extends Fragment {
                              Bundle savedInstanceState) {
         V = inflater.inflate(R.layout.camera_fragment, container, false);
 
-        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/albums.json";
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
+        if (locationSelected.equals("leaside-14")) {
+            locationSelected = "leaside";
+        }
+
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/albums.json";
 
         new getAlbumsThumbnail().execute();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -171,7 +183,7 @@ public class CameraFragment extends Fragment {
             HttpClient httpClient = new DefaultHttpClient();
 
             // using POST method
-            HttpPost httpPostRequest = new HttpPost("http://" + HomeFragment.companySelected + "/albums/" + album_handle + "/537e5b67c0af973c7900002c/add.json");
+            HttpPost httpPostRequest = new HttpPost("http://" + companySelected + "/albums/" + album_handle + "/537e5b67c0af973c7900002c/add.json");
             Log.e("LOG", album_handle + "");
             try {
 

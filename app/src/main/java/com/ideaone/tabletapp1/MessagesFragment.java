@@ -2,6 +2,7 @@ package com.ideaone.tabletapp1;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
@@ -31,6 +32,9 @@ import java.util.Calendar;
  * A simple {@link Fragment} subclass.
  */
 public class MessagesFragment extends Fragment implements MessagesDownload.Communicator {
+
+    public static String companySelected;
+    public static String locationSelected;
 
     public static String promoType = "Announcement";
     public static String promoType2 = "Birthday";
@@ -62,6 +66,14 @@ public class MessagesFragment extends Fragment implements MessagesDownload.Commu
                              Bundle savedInstanceState) {
 
         View V = inflater.inflate(R.layout.messages_fragment, container, false);
+
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
+        if (locationSelected.equals("leaside-14")) {
+            locationSelected = "leaside";
+        }
 
         mAnnouncementFlipper = (ViewFlipper) V.findViewById(R.id.viewFlipperAnnouncement);
         left_arrow = (ImageView) V.findViewById(R.id.left_arrow);

@@ -41,7 +41,7 @@ public class GallDownloadPhotoFull extends AsyncTask<Void, Integer, Void> {
 
 
             // String image_url = "http://static-a.reveraconnect.com/250/" + photo_name + "." + photo_ext;
-            String image_url_full = "http://static-a." + HomeFragment.companySelected + "/full/" + photo_name + "." + photo_ext;
+            String image_url_full = "http://static-a." + GallPhotoFragment.companySelected + "/full/" + photo_name + "." + photo_ext;
 
             URL downloadURL = new URL(image_url_full);
             HttpURLConnection conn = (HttpURLConnection) downloadURL.openConnection();

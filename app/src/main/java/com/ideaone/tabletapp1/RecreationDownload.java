@@ -89,7 +89,7 @@ class RecreationDownload extends AsyncTask<Void, Integer, Void> {
 
                     Log.e("REC DOWNLOAD","TEST" + requested_date);
 
-                    theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1");
+                    theUrl = new URL("http://" + RecreationFragment.companySelected + "/displays/" + RecreationFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1");
                     parseJSON(theUrl);
                 }
             } else {
@@ -230,6 +230,6 @@ class RecreationDownload extends AsyncTask<Void, Integer, Void> {
 
     interface Communicator {
         //   void updateProgressTo(int progress);
-        void updateUI(ArrayList<RecreationObject> menuArrayList);
+        void updateUI(ArrayList<RecreationObject> recArrayList);
     }
 }

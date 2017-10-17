@@ -3,6 +3,7 @@ package com.ideaone.tabletapp1;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,6 +29,9 @@ import java.util.List;
 
 public class RecreationFragment extends Fragment implements RecreationDownload.Communicator {
 
+    static String companySelected;
+    static String locationSelected;
+
     int itemsToStore = 30;
 
     static String URLLegend;
@@ -51,12 +55,16 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.recreation_fragment, container, false);
 
-        //if (locationSelected.equals("leaside-14")) {
-        //    locationSelected = "leaside";
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
+        // if (locationSelected.equals("leaside-14")) {
+        //     locationSelected = "leaside";
         // }
 
         titleDate = new SimpleDateFormat("EEE (MMM dd)");
-        URLLegend = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/legends.json";
+        URLLegend = "http://" + companySelected + "/displays/" + locationSelected + "/legends.json";
 
         Log.e("URLLegend", URLLegend);
 
@@ -107,7 +115,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, ++dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -142,7 +150,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, --dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -178,7 +186,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, dateCounter);
         requested_date = calendar.getTime();
-        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
 
         //  date = (TextView) V.findViewById(R.id.menu_side_date);
         sdf = new SimpleDateFormat("MMM dd");
@@ -208,9 +216,10 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat date1 = new SimpleDateFormat("MMM dd");
         SimpleDateFormat day1 = new SimpleDateFormat("EEEE");
-        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/recreation.json?date=" + sdf.format(calendar.getTime()) + "&nohtml=1";
+        requested_date = calendar.getTime();
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/recreation.json?date=" + sdf.format(requested_date) + "&nohtml=1";
         tv_rec.setText(R.string.recreationLoading);
-        recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + day1.format(calendar.getTime()) + " (" + date1.format(calendar.getTime()) + ")</b>"));
+        recreation_title.setText(Html.fromHtml("<b>Recreation</b>" + "<b>" + " for " + day1.format(requested_date) + " (" + date1.format(requested_date) + ")</b>"));
         //date.setText(Html.fromHtml("<b>" + day1.format(calendar.getTime()) + "<br/>" + date1.format(calendar.getTime()) + "</b>"));
         //      date.setText(Html.fromHtml("<b>RECREATION</b>"));
         //      date.setGravity(Gravity.CENTER);
@@ -222,7 +231,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         if (isNetworkAvailable()) {
             try {
                 getAsyncTask.cancel(true);
-                getAsyncTask = new RecreationDownload(RecreationFragment.this);
+                getAsyncTask = new RecreationDownload(this);
                 getAsyncTask.execute();
             } catch (NullPointerException e) {
                 e.printStackTrace();
@@ -270,6 +279,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
             }
         }
         // dbAlb.close();
+        //UIupdate(result);
         UIupdate(result);
     }
 
@@ -280,10 +290,6 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         if (result == null) {
             tv_rec.setText(Html.fromHtml("<b>LOADING......</b>"));
         } else {
-            sdf_date = new SimpleDateFormat("yyyy-MM-dd");
-            calendar = new GregorianCalendar();
-            calendar.add(Calendar.DATE, dateCounter);
-            requested_date = calendar.getTime();
             UInoWifi(sdf_date.format(requested_date));
         }
     }
@@ -311,6 +317,7 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
             }
         }
     }
+
 
     public boolean isNetworkAvailable() {
         getActivity().getApplicationContext();
@@ -342,5 +349,4 @@ public class RecreationFragment extends Fragment implements RecreationDownload.C
         if (getAsyncTask != null)
             getAsyncTask.cancel(true);
     }
-
 }

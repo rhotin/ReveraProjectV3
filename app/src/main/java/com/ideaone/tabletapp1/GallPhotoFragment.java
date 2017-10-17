@@ -3,6 +3,7 @@ package com.ideaone.tabletapp1;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,10 +27,10 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class GallPhotoFragment extends Fragment implements GallDownloadAlbums.CommunicatorA, GallDownloadPhotos.Communicator, GallDownloadPhotoFull.CommunicatorF {
-    //String locationSelected;
+    static String companySelected;
+    static String locationSelected;
 
     static String AlURL;
-
     ListView albumListView;
     ProgressBar progressBarA;
     TextView messageTextA;
@@ -72,13 +73,18 @@ public class GallPhotoFragment extends Fragment implements GallDownloadAlbums.Co
         // Inflate the layout for this fragment
         View V = inflater.inflate(R.layout.gallery_fragment, container, false);
 
-        //AlbumObject obj = getActivity().getIntent().getParcelableExtra("theObject");
-        //newRURL = RURL + obj.albumID;
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
+        if (locationSelected.equals("leaside-14")) {
+            locationSelected = "leaside";
+        }
 
         dbAlb = new DBAdapterAlbums(getActivity().getBaseContext());
         dbPhoto = new DBAdapterPhotos(getActivity().getBaseContext());
 
-        AlURL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/albums.json?album=";
+        AlURL = "http://" + companySelected + "/displays/" + locationSelected + "/albums.json?album=";
 
         albumListView = (ListView) V.findViewById(R.id.listViewA);
         progressBarA = (ProgressBar) V.findViewById(R.id.progressBarA);

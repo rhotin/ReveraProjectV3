@@ -40,7 +40,7 @@ public class MessagesDownload extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void... params) {
         URL theUrl;
         try {
-            theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/promos.json");
+            theUrl = new URL("http://" + MessagesFragment.companySelected + "/displays/" + MessagesFragment.locationSelected + "/promos.json");
             //theUrl = new URL("http://revera.mxs-s.com/displays/" + HomeFragment.locationSelected + "/promos.json?location=kiosk");
             BufferedReader reader = new BufferedReader
                     (new InputStreamReader(theUrl.openConnection().getInputStream(), "UTF-8"));

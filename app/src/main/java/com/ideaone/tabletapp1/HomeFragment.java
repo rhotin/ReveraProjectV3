@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment implements HomeDownload.Communicator 
         // Inflate the layout for this fragment
         V = inflater.inflate(R.layout.home_fragment, container, false);
 
-        final SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();
         locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
         companySelected = prefs.getString("company", getString(R.string.RetirementCompany));

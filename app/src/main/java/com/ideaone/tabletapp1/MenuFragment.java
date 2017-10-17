@@ -3,6 +3,7 @@ package com.ideaone.tabletapp1;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
@@ -29,7 +30,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment implements MenuDownload.Communicator {
-    //String locationSelected;
+
+    static String companySelected;
+    static String locationSelected;
 
     TextView menu_title, menu_lunch, menu_dinner;
     Date resultdate, requested_date, resultdate1;
@@ -49,6 +52,14 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.menu_fragment, container, false);
+
+        final SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        locationSelected = prefs.getString("location", getString(R.string.RetirementLocation));
+        companySelected = prefs.getString("company", getString(R.string.RetirementCompany));
+        if (locationSelected.equals("leaside-14")) {
+            locationSelected = "leaside";
+        }
 
         db = new DBAdapterMenu(getActivity().getBaseContext());
 
@@ -107,7 +118,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, ++dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
                 if (dateCounter - 1 == -1) {
                     menu_title.setText(Html.fromHtml("<b>Menu</b>" + "<b>" + " for " + "Today" + "</b>"));
@@ -147,7 +158,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
                 calendar = new GregorianCalendar();
                 calendar.add(Calendar.DATE, --dateCounter);
                 requested_date = calendar.getTime();
-                URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+                URL = "http://" + companySelected + "/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
                 resultdate1 = calendar.getTime();
 
                 if (dateCounter - 1 == -1) {
@@ -182,7 +193,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         dateCounter = 0;
         calendar.add(Calendar.DATE, dateCounter);
         requested_date = calendar.getTime();
-        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1";
         Log.e("MenuURL", "" + URL);
 
         if (isNetworkAvailable()) {
@@ -200,7 +211,7 @@ public class MenuFragment extends Fragment implements MenuDownload.Communicator 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
         SimpleDateFormat date1 = new SimpleDateFormat("MMM dd", Locale.CANADA);
         requested_date = calendar.getTime();
-        URL = "http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf.format(requested_date) + "&nohtml=1";
+        URL = "http://" + companySelected + "/displays/" + locationSelected + "/menu.json?date=" + sdf.format(requested_date) + "&nohtml=1";
         menu_lunch.setText(R.string.loadingMenuText);
         menu_dinner.setText("");
         //   date.setText(Html.fromHtml("<b>MENU</b>"));

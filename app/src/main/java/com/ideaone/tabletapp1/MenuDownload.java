@@ -67,7 +67,7 @@ class MenuDownload extends AsyncTask<Void, Integer, Void> {
                     requested_date = calendarDate.getTime();
 
                     Log.e("MENU DOWNLOAD", "TEST" + requested_date);
-                    theUrl = new URL("http://" + HomeFragment.companySelected + "/displays/" + HomeFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1");
+                    theUrl = new URL("http://" + MenuFragment.companySelected + "/displays/" + MenuFragment.locationSelected + "/menu.json?date=" + sdf_date.format(requested_date) + "&nohtml=1");
                     parseJSON(theUrl);
                 }
             } else {
